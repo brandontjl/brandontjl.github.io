@@ -1,0 +1,159 @@
+.container {
+    font: sans-serif;
+    font-size: 50px
+}
+
+.box {
+    background: white;
+    border: black 1px solid;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    margin-top: 0;
+    cursor: pointer;
+    float: left;
+    text-align: center;
+    font-size: 10px;
+    padding: auto;
+}
+
+.row {
+    display: block;
+    float: left;
+    width: 100%;
+}
+
+.blue {
+    padding: auto;
+    background-color: blue;
+}
+
+#B1,
+#B2,
+#C1,
+#C2,
+#B6,
+#B10,
+#D4,
+#E1,
+#E11,
+#F14,
+#H0,
+#H1,
+#H2,
+#H3,
+#H4,
+#H5,
+#J14,
+#K1,
+#K11,
+#L4,
+#N6,
+#N10 {
+    background-color: lightskyblue
+}
+
+#B12,
+#B13,
+#C12,
+#C13,
+#B7,
+#C7,
+#D7,
+#E7,
+#F7,
+#G7,
+#C4,
+#C10,
+#E2,
+#E12,
+#G0,
+#G14,
+#K0,
+#K4,
+#K10,
+#K14,
+#N5,
+#N9 {
+    background-color: red
+}
+
+#B12,
+#B13,
+#C12,
+#C13,
+#B7,
+#C7,
+#D7,
+#E7,
+#F7,
+#G7,
+#C4,
+#C10,
+#E2,
+#E12,
+#G0,
+#G14,
+#K0,
+#K4,
+#K10,
+#K14,
+#N5,
+#N9 {
+    background-color: red
+}
+
+#M12,
+#M13,
+#N12,
+#N13,
+#B4,
+#B8,
+#D10,
+#E3,
+#E13,
+#F0,
+#H9,
+#H10,
+#H11,
+#H12,
+#H13,
+#H14,
+#J0,
+#K3,
+#K13,
+#L10,
+#N4,
+#N8 {
+    background-color: greenyellow
+}
+
+#M1,
+#M2,
+#N1,
+#N2,
+#B5,
+#B9,
+#E0,
+#E4,
+#E10,
+#E14,
+#I0,
+#I14,
+#I7,
+#J7,
+#K7,
+#L7,
+#M7,
+#N7,
+#K2,
+#K12,
+#M4,
+#M10 {
+    background-color: yellow
+}
+
+.dice {
+    cursor: pointer;
+    background-color: white
+}

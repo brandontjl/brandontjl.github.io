@@ -26,6 +26,46 @@ const makeBoard = () => {
         const $selectedBox = $(event.currentTarget)
     })
 }
+
+const createBlue = () => {
+    const blueZone = ["#B1", "#B2", "#C1", "#C2"]
+    for (let i = 0; i < blueZone.length; i++) {
+        const $bluePiece = $("<button>").addClass("blue").attr("id", `P${i + 1}`)
+        const $blueImg = $("<img src = https://i.imgur.com/44qVxWe.png>").addClass("blueImage")
+        $bluePiece.append($blueImg)
+        $(blueZone[i]).append($bluePiece)
+    }
+}
+
+const createRed = () => {
+    const redZone = ["#B12", "#B13", "#C12", "#C13"]
+    for (let i = 0; i < redZone.length; i++) {
+        const $redPiece = $("<button>").addClass("red").attr("id", `P${i + 1}`)
+        const $redImg = $("<img src = https://i.imgur.com/vmIFKvG.png>").addClass("redImage")
+        $redPiece.append($redImg)
+        $(redZone[i]).append($redPiece)
+    }
+}
+
+const createGreen = () => {
+    const greenZone = ["#M12", "#M13", "#N12", "#N13"]
+    for (let i = 0; i < greenZone.length; i++) {
+        const $greenPiece = $("<button>").addClass("green").attr("id", `P${i + 1}`)
+        const $greenImg = $("<img src = https://i.imgur.com/g534ewO.png>").addClass("greenImage")
+        $greenPiece.append($greenImg)
+        $(greenZone[i]).append($greenPiece)
+    }
+}
+
+const createYellow = () => {
+    const yellowZone = ["#M1", "#M2", "#N1", "#N2"]
+    for (let i = 0; i < yellowZone.length; i++) {
+        const $yellowPiece = $("<button>").addClass("yellow").attr("id", `P${i + 1}`)
+        const $yellowImg = $("<img src = https://i.imgur.com/gg2hWnE.png>").addClass("yellowImage")
+        $yellowPiece.append($yellowImg)
+        $(yellowZone[i]).append($yellowPiece)
+    }
+}
 // blank out irrelevant squares
 
 // set the starting blocks for the aeroplanes - Done in CSS
@@ -68,10 +108,10 @@ const rollDice = () => {
 // input rules
 
 $(() => {
-    const $playerNumber = $("<h1>").text("How many players are playing?").append("<input>")
-    $(".container").append($playerNumber)
+    // const $playerNumber = $("<h1>").text("How many players are playing?")
+    // const $inputNumber = $("<input>").attr
+    // $(".container").append($playerNumber)
     // build landing page and only start game upon pressing button and entering number of players
-
     const $startButton = $("<button>").text("Start")
     $(".container").append($startButton)
 
@@ -87,6 +127,8 @@ $(() => {
         // const pieceColours = ["blue", "red", "green", "yellow"]
         // const gamePieces = []
         // for (let i = 0; i < pieceColours.length; i++) {
+        //     for (let j = 0; j < 4; j ++){}
+        //     let n = 0
         //     while (n < 4) { // error throws that n is not defined - but why?
         //         const $gamePiece = $("<button>").addClass(pieceColours[i])
         //         if (pieceColours == "blue") {
@@ -98,13 +140,7 @@ $(() => {
         // }
 
         // console.log(gamePieces)
-        const blueZone = ["#B1", "#B2", "#C1", "#C2"]
-        for (let i = 0; i < blueZone.length; i++) {
-            const $bluePiece = $("<button>").addClass("blue").attr("id", `P${i + 1}`)
-            const $blueImg = $("<img src = https://i.imgur.com/44qVxWe.png>").addClass("blueImage")
-            $bluePiece.append($blueImg)
-            $(blueZone[i]).append($bluePiece)
-        }
+
         // const $bluePiece = $("<button>").addClass("blue").attr("id", 'P1')
         // const $blueImg = $("<img src = https://i.imgur.com/44qVxWe.png>").addClass("blueImage")
         // $bluePiece.append($blueImg)
@@ -113,29 +149,11 @@ $(() => {
         // $("#C1").append($bluePiece)
         // $("#C2").append($bluePiece)
 
-        const redZone = ["#B12", "#B13", "#C12", "#C13"]
-        for (let i = 0; i < redZone.length; i++) {
-            const $redPiece = $("<button>").addClass("red").attr("id", `P${i + 1}`)
-            const $redImg = $("<img src = https://i.imgur.com/vmIFKvG.png>").addClass("redImage")
-            $redPiece.append($redImg)
-            $(redZone[i]).append($redPiece)
-        }
+        createBlue()
+        createRed()
+        createGreen()
+        createYellow()
 
-        const greenZone = ["#M12", "#M13", "#N12", "#N13"]
-        for (let i = 0; i < greenZone.length; i++) {
-            const $greenPiece = $("<button>").addClass("green").attr("id", `P${i + 1}`)
-            const $greenImg = $("<img src = https://i.imgur.com/g534ewO.png>").addClass("greenImage")
-            $greenPiece.append($greenImg)
-            $(greenZone[i]).append($greenPiece)
-        }
-
-        const yellowZone = ["#M1", "#M2", "#N1", "#N2"]
-        for (let i = 0; i < yellowZone.length; i++) {
-            const $yellowPiece = $("<button>").addClass("yellow").attr("id", `P${i + 1}`)
-            const $yellowImg = $("<img src = https://i.imgur.com/gg2hWnE.png>").addClass("yellowImage")
-            $yellowPiece.append($yellowImg)
-            $(yellowZone[i]).append($yellowPiece)
-        }
         // this portion works if we dont have the gamepieces code above
         const $dice = $("<button>").addClass("dice").text("Dice")
         $(".container").append($dice)

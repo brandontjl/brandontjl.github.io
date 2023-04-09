@@ -1,8 +1,7 @@
-// Set landing page
+// Set landing page - Done
+// build the 15x15 grid (can potentially set 16 x 16 to include the starting points) - Done
 
-// Set player names
-
-// build the 15x15 grid (can potentially set 16 x16 to include the starting points)
+let playerRoll = 0 // globally defined playerRoll
 const makeBoard = () => {
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"]
     for (let i = 0; i < 15; i++) {
@@ -17,20 +16,12 @@ const makeBoard = () => {
         const $container = $(".container")
         $container.append($row)
     }
-    const $row = $(".row")
-    const $box = $(".box")
-    let turn = 1
-    const registeredPlays = []
-    $box.on("click", (event) => {
-        console.log($(event.currentTarget))
-        const $selectedBox = $(event.currentTarget)
-    })
 }
 
 const createBlue = () => {
     const blueZone = ["#B1", "#B2", "#C1", "#C2"]
     for (let i = 0; i < blueZone.length; i++) {
-        const $bluePiece = $("<button>").addClass("blue").attr("id", `P${i + 1}`)
+        const $bluePiece = $("<button>").addClass("blue piece").attr("id", `P${i + 1}`)
         const $blueImg = $("<img src = https://i.imgur.com/44qVxWe.png>").addClass("blueImage")
         $bluePiece.append($blueImg)
         $(blueZone[i]).append($bluePiece)
@@ -40,7 +31,7 @@ const createBlue = () => {
 const createRed = () => {
     const redZone = ["#B12", "#B13", "#C12", "#C13"]
     for (let i = 0; i < redZone.length; i++) {
-        const $redPiece = $("<button>").addClass("red").attr("id", `P${i + 1}`)
+        const $redPiece = $("<button>").addClass("red piece").attr("id", `P${i + 1}`)
         const $redImg = $("<img src = https://i.imgur.com/vmIFKvG.png>").addClass("redImage")
         $redPiece.append($redImg)
         $(redZone[i]).append($redPiece)
@@ -50,7 +41,7 @@ const createRed = () => {
 const createGreen = () => {
     const greenZone = ["#M12", "#M13", "#N12", "#N13"]
     for (let i = 0; i < greenZone.length; i++) {
-        const $greenPiece = $("<button>").addClass("green").attr("id", `P${i + 1}`)
+        const $greenPiece = $("<button>").addClass("green piece").attr("id", `P${i + 1}`)
         const $greenImg = $("<img src = https://i.imgur.com/g534ewO.png>").addClass("greenImage")
         $greenPiece.append($greenImg)
         $(greenZone[i]).append($greenPiece)
@@ -60,30 +51,17 @@ const createGreen = () => {
 const createYellow = () => {
     const yellowZone = ["#M1", "#M2", "#N1", "#N2"]
     for (let i = 0; i < yellowZone.length; i++) {
-        const $yellowPiece = $("<button>").addClass("yellow").attr("id", `P${i + 1}`)
+        const $yellowPiece = $("<button>").addClass("yellow piece").attr("id", `P${i + 1}`)
         const $yellowImg = $("<img src = https://i.imgur.com/gg2hWnE.png>").addClass("yellowImage")
         $yellowPiece.append($yellowImg)
         $(yellowZone[i]).append($yellowPiece)
     }
 }
 // blank out irrelevant squares
-
 // set the starting blocks for the aeroplanes - Done in CSS
 // set the squares to 4 colours each - Done in CSS
 // set the darker colours for the shortcuts
 // build the inner lanes to win
-
-// build the 4 pieces for each colour (total 16 pieces) using Class?
-
-class GamePiece {
-    constructor(color) {
-        this.color = color
-    }
-
-    move() {
-
-    }
-}
 
 // Set default path of piece (grid aquares) assuming we starting with a blue piece
 
@@ -104,19 +82,38 @@ const rollDice = () => {
     return result
 }
 // set click movement to move
-
 // input rules
 
+// Check if the pieces are still in the houses
+const startingPoint = (arr, selectedPiece) => {
+    // console.log(selectedPiece)
+    if (arr.includes(selectedPiece.attr("id"))) {
+        // console.log(selectedPiece.attr("id"))
+        if (playerRoll == 6) {
+            if (selectedPiece.children().attr("class").split(' ')[0] == "blue") {
+                $("#D0").append(selectedPiece.children())
+            } else if (selectedPiece.children().attr("class").split(' ')[0] == "green") {
+                $("#L14").append(selectedPiece.children())
+            } else if (selectedPiece.children().attr("class").split(' ')[0] == "red") {
+                $("#B11").append(selectedPiece.children())
+            } else if (selectedPiece.children().attr("class").split(' ')[0] == "yellow") {
+                $("#N3").append(selectedPiece.children())
+            }
+        }
+    }
+}
+
+// Moving from starting point into the outer path array
+
+
 $(() => {
-    // const $playerNumber = $("<h1>").text("How many players are playing?")
-    // const $inputNumber = $("<input>").attr
-    // $(".container").append($playerNumber)
     // build landing page and only start game upon pressing button and entering number of players
     const $startButton = $("<button>").text("Start")
     $(".container").append($startButton)
-
     $startButton.on("click", (event) => {
         event.preventDefault()
+        const $inputNumber = $("#player-number").val()
+        let x = $inputNumber
         $(".container").empty()
         makeBoard()
         $("#D0").text("SP")
@@ -124,7 +121,50 @@ $(() => {
         $("#L14").text("SP")
         $("#N3").text("SP")
 
-        // const pieceColours = ["blue", "red", "green", "yellow"]
+        if (x == 4) {
+            createBlue()
+            createRed()
+            createGreen()
+            createYellow()
+        } else if (x == 2) {
+            createBlue()
+            createGreen()
+        } else {
+            createBlue()
+            createRed()
+            createGreen()
+        }
+        // Dice roll
+        const $dice = $("<button>").addClass("dice").text("Dice")
+        $(".container").append($dice)
+        $dice.on("click", (event) => {
+            event.preventDefault()
+            playerRoll = rollDice()
+            console.log(playerRoll) // dice will work and can record the dice rolled
+        })
+        const houses = ["B1", "B2", "C1", "C2", "B12", "B13", "C12", "C13", "M1", "M2", "N1", "N2", "M12", "M13", "N12", "N13"]
+        const $piece = $(".box") // what if i put it as the grid instead?
+        $piece.on("click", (event) => {
+            event.preventDefault()
+            startingPoint(houses, $(event.currentTarget))
+            // check if they are still in houses
+
+        })
+        // how to just apply the function to the selected piece?
+
+        // Rules of the game
+
+    })
+
+
+
+
+
+})
+
+// Appendix (unused code)
+// Creating pieces
+// const pieceColours = ["blue", "red", "green", "yellow"]
         // const gamePieces = []
         // for (let i = 0; i < pieceColours.length; i++) {
         //     for (let j = 0; j < 4; j ++){}
@@ -149,27 +189,23 @@ $(() => {
         // $("#C1").append($bluePiece)
         // $("#C2").append($bluePiece)
 
-        createBlue()
-        createRed()
-        createGreen()
-        createYellow()
+        // build the 4 pieces for each colour (total 16 pieces) using Class?
 
-        // this portion works if we dont have the gamepieces code above
-        const $dice = $("<button>").addClass("dice").text("Dice")
-        $(".container").append($dice)
-        let playerRoll = 0
-        $dice.on("click", (event) => {
-            event.preventDefault()
-            playerRoll = rollDice()
-            console.log(playerRoll) // dice will work and can record the dice rolled
-        })
+// class GamePiece {
+//     constructor(color) {
+//         this.color = color
+//     }
 
-        // Rules of the game
+//     move() {
 
-    })
+//     }
+// }
 
-
-
-
-
-})
+    // const $row = $(".row")
+    // const $box = $(".box")
+    // let turn = 1
+    // const registeredPlays = []
+    // $box.on("click", (event) => {
+    //     console.log($(event.currentTarget))
+    //     const $selectedBox = $(event.currentTarget)
+    // })

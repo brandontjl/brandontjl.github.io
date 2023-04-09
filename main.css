@@ -1,6 +1,15 @@
 body {
     font: sans-serif;
-    font-size: 50px
+    font-size: 50px;
+    color: darkslateblue;
+    padding: 10px;
+}
+
+#plane {
+    position: absolute;
+    display: block;
+    width: 100%;
+    float: left
 }
 
 .container {

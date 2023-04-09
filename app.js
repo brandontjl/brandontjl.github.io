@@ -65,7 +65,7 @@ const createYellow = () => {
 
 // Set default path of piece (grid aquares) assuming we starting with a blue piece
 
-const outerPath = ["E0", "E1", "E2", "E3", "E4", "D4", "C4", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "C10", "D10", "E10", "E11", "E12", "E13", "E14", "F14", "G14", "H14", "I14", "J14", "K14", "K13", "K12", "K11", "K10", "L10", "M10", "N10", "O10", "O9", "O8", "O7", "O6", "O5", "O4", "N4", "M4", "L4", "K4", "K3", "K2", "K1", "K0", "J0", "I0", "H0", "G0", "F0"]
+const outerPath = ["E0", "E1", "E2", "E3", "E4", "D4", "C4", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "C10", "D10", "E10", "E11", "E12", "E13", "E14", "F14", "G14", "H14", "I14", "J14", "K14", "K13", "K12", "K11", "K10", "L10", "M10", "N10", "N9", "N8", "N7", "N6", "N5", "N4", "M4", "L4", "K4", "K3", "K2", "K1", "K0", "J0", "I0", "H0", "G0", "F0"]
 
 const blueInnerPath = ["H0", "H1", "H2", "H3", "H4", "H5", "H6"]
 const redInnerPath = ["B7", "C7", "D7", "E7", "F7", "G7", "H7"]
@@ -100,10 +100,35 @@ const startingPoint = (arr, selectedPiece) => {
                 $("#N3").append(selectedPiece.children())
             }
         }
+        playerRoll = 0 // resets playerRoll
     }
 }
-
 // Moving from starting point into the outer path array
+const moveOut = (arr, selectedPiece) => {
+    if (selectedPiece.attr("id") == "D0") {
+        let arrayEndpt = arr[playerRoll - 1]
+        console.log(arrayEndpt)
+        const $endPoint = $(`#${arrayEndpt}`)
+        $endPoint.append(selectedPiece.children())
+    } else if (selectedPiece.attr("id") == "L14") {
+        let arrayEndpt = arr[25 + playerRoll]
+        console.log(arrayEndpt)
+        const $endPoint = $(`#${arrayEndpt}`)
+        $endPoint.append(selectedPiece.children())
+    } else if (selectedPiece.attr("id") == "B11") {
+        let arrayEndpt = arr[12 + playerRoll]
+        console.log(arrayEndpt)
+        const $endPoint = $(`#${arrayEndpt}`)
+        $endPoint.append(selectedPiece.children())
+    } else if (selectedPiece.attr("id") == "N3") {
+        let arrayEndpt = arr[38 + playerRoll]
+        console.log(arrayEndpt)
+        const $endPoint = $(`#${arrayEndpt}`)
+        $endPoint.append(selectedPiece.children())
+    }
+    playerRoll = 0
+}
+
 
 
 $(() => {
@@ -146,11 +171,15 @@ $(() => {
         const $piece = $(".box") // what if i put it as the grid instead?
         $piece.on("click", (event) => {
             event.preventDefault()
-            startingPoint(houses, $(event.currentTarget))
             // check if they are still in houses
-
+            startingPoint(houses, $(event.currentTarget))
         })
         // how to just apply the function to the selected piece?
+        const $movingPiece = $(".box")
+        $movingPiece.on("click", (event) => {
+            event.preventDefault()
+            moveOut(outerPath, $(event.currentTarget))
+        })
 
         // Rules of the game
 

@@ -72,6 +72,23 @@ const redInnerPath = ["B7", "C7", "D7", "E7", "F7", "G7", "H7"]
 const greenInnerPath = ["H14", "H13", "H12", "H11", "H10", "H9", "H8"]
 const yellowInnerPath = ["N7", "M7", "L7", "K7", "J7", "I7", "H7"]
 
+const blueSquares = []
+const redSquares = []
+const greenSquares = []
+const yellowSquares = []
+for (let i = 0; i < outerPath.length; i += 4) {
+    yellowSquares.push(outerPath[i])
+}
+for (let i = 1; i < outerPath.length; i += 4) {
+    blueSquares.push(outerPath[i])
+}
+for (let i = 2; i < outerPath.length; i += 4) {
+    redSquares.push(outerPath[i])
+}
+for (let i = 3; i < outerPath.length; i += 4) {
+    greenSquares.push(outerPath[i])
+}
+
 
 // build dice throw (single die)
 const rollDice = () => {
@@ -100,35 +117,76 @@ const startingPoint = (arr, selectedPiece) => {
                 $("#N3").append(selectedPiece.children())
             }
         }
-        playerRoll = 0 // resets playerRoll
+        playerRoll = null // resets playerRoll
     }
 }
 // Moving from starting point into the outer path array
 const moveOut = (arr, selectedPiece) => {
     if (selectedPiece.attr("id") == "D0") {
         let arrayEndpt = arr[playerRoll - 1]
-        console.log(arrayEndpt)
+        if (playerRoll == 2 || playerRoll == 6) {
+            arrayEndpt = arr[playerRoll - 1 + 4]
+        }
+        // console.log(arrayEndpt)
         const $endPoint = $(`#${arrayEndpt}`)
         $endPoint.append(selectedPiece.children())
     } else if (selectedPiece.attr("id") == "L14") {
         let arrayEndpt = arr[25 + playerRoll]
-        console.log(arrayEndpt)
+        if (playerRoll == 2 || playerRoll == 6) {
+            arrayEndpt = arr[25 + playerRoll + 4]
+        }
         const $endPoint = $(`#${arrayEndpt}`)
         $endPoint.append(selectedPiece.children())
     } else if (selectedPiece.attr("id") == "B11") {
         let arrayEndpt = arr[12 + playerRoll]
-        console.log(arrayEndpt)
+        if (playerRoll == 2 || playerRoll == 6) {
+            arrayEndpt = arr[12 + playerRoll + 4]
+        }
         const $endPoint = $(`#${arrayEndpt}`)
         $endPoint.append(selectedPiece.children())
     } else if (selectedPiece.attr("id") == "N3") {
         let arrayEndpt = arr[38 + playerRoll]
-        console.log(arrayEndpt)
+        if (playerRoll == 2 || playerRoll == 6) {
+            arrayEndpt = arr[38 + playerRoll + 4]
+        }
         const $endPoint = $(`#${arrayEndpt}`)
         $endPoint.append(selectedPiece.children())
     }
-    playerRoll = 0
+    playerRoll = null
 }
 
+// embedded function - from outerpath into innerpath
+
+// moving along the outerpath
+const move = (arr, selectedPiece) => {
+    let startingPoint = arr.indexOf(selectedPiece.attr("id"))
+    let endingPoint = arr[startingPoint + playerRoll]
+    // const $endPosition = $(`#${endingPoint}`)
+    count = 1
+    if (startingPoint + playerRoll > 51) {
+        let leftover = (startingPoint + playerRoll) - 52
+        endingPoint = arr[leftover]
+    }
+    if (blueSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "blue" && count == 1) {
+        endingPoint = arr[arr.indexOf(endingPoint) + 4]
+        count += 1
+    }
+    if (redSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "red" && count == 1) {
+        endingPoint = arr[arr.indexOf(endingPoint) + 4]
+        count += 1
+    }
+    if (greenSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "green" && count == 1) {
+        endingPoint = arr[arr.indexOf(endingPoint) + 4]
+        count += 1
+    }
+    if (yellowSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "yellow" && count == 1) {
+        endingPoint = arr[arr.indexOf(endingPoint) + 4]
+        count += 1
+    }
+    $(`#${endingPoint}`).append(selectedPiece.children())
+    playerRoll = null
+    count = 1
+}
 
 
 $(() => {
@@ -141,10 +199,10 @@ $(() => {
         let x = $inputNumber
         $(".container").empty()
         makeBoard()
-        $("#D0").text("SP")
-        $("#B11").text("SP")
-        $("#L14").text("SP")
-        $("#N3").text("SP")
+        $("#D0").text("SP").addClass("sp")
+        $("#B11").text("SP").addClass("sp")
+        $("#L14").text("SP").addClass("sp")
+        $("#N3").text("SP").addClass("sp")
 
         if (x == 4) {
             createBlue()
@@ -174,14 +232,19 @@ $(() => {
             // check if they are still in houses
             startingPoint(houses, $(event.currentTarget))
         })
-        // how to just apply the function to the selected piece?
-        const $movingPiece = $(".box")
+        // how to just apply the function to the selected piece
+        const $movingPiece = $(".sp")
         $movingPiece.on("click", (event) => {
             event.preventDefault()
             moveOut(outerPath, $(event.currentTarget))
         })
 
         // Rules of the game
+        const $movingOuterPiece = $(".box")
+        $movingOuterPiece.on("click", (event) => {
+            event.preventDefault()
+            move(outerPath, $(event.currentTarget))
+        })
 
     })
 

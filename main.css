@@ -215,3 +215,9 @@ h1 {
     cursor: pointer;
     background-color: white
 }
+
+#H6,
+#H7,
+#H8 {
+    background-color: gold;
+}

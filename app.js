@@ -2,6 +2,7 @@
 // build the 15x15 grid (can potentially set 16 x 16 to include the starting points) - Done
 
 let playerRoll = 0 // globally defined playerRoll
+let allChildren = []
 const makeBoard = () => {
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"]
     for (let i = 0; i < 15; i++) {
@@ -71,6 +72,11 @@ const blueInnerPath = ["H0", "H1", "H2", "H3", "H4", "H5", "H6"]
 const redInnerPath = ["B7", "C7", "D7", "E7", "F7", "G7", "H7"]
 const greenInnerPath = ["H14", "H13", "H12", "H11", "H10", "H9", "H8"]
 const yellowInnerPath = ["N7", "M7", "L7", "K7", "J7", "I7", "H7"]
+
+const blueHome = ["B1", "B2", "C1", "C2"]
+const redHome = ["B12", "B13", "C12", "C13"]
+const greenHome = ["M1", "M2", "N1", "N2"]
+const yellowHome = ["M12", "M13", "N12", "N13"]
 
 const blueSquares = []
 const redSquares = []
@@ -162,32 +168,73 @@ const move = (arr, selectedPiece) => {
     let startingPoint = arr.indexOf(selectedPiece.attr("id"))
     let endingPoint = arr[startingPoint + playerRoll]
     // const $endPosition = $(`#${endingPoint}`)
+    console.log(selectedPiece.attr("id"))
+    // piece of code not working yet
+    if (blueInnerPath.includes(selectedPiece.attr("id"))) {
+        startingPoint = blueInnerPath.indexOf(selectedPiece.attr("id"))
+        endingPoint = blueInnerPath[startingPoint + playerRoll]
+        if (startingPoint + playerRoll > 6) {
+            if (startingPoint + playerRoll == 7) {
+                endingPoint = blueInnerPath[5]
+            } else if (startingPoint + playerRoll == 8) {
+                endingPoint = blueInnerPath[4]
+            } else if (startingPoint + playerRoll == 9) {
+                endingPoint = blueInnerPath[3]
+            } else if (startingPoint + playerRoll == 10) {
+                endingPoint = blueInnerPath[2]
+            } else if (startingPoint + playerRoll == 11) {
+                endingPoint = blueInnerPath[1]
+            }
+        }
+        if (startingPoint + playerRoll == 6) {
+            // return piece to home to cover win
+        }
+        return
+    }
     count = 1
     if (startingPoint + playerRoll > 51) {
         let leftover = (startingPoint + playerRoll) - 52
         endingPoint = arr[leftover]
     }
-    if (blueSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "blue" && count == 1) {
+    if (blueSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "blue" && count == 1 && playerRoll != null) {
         endingPoint = arr[arr.indexOf(endingPoint) + 4]
         count += 1
     }
-    if (redSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "red" && count == 1) {
+    if (redSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "red" && count == 1 && playerRoll != null) {
         endingPoint = arr[arr.indexOf(endingPoint) + 4]
         count += 1
     }
-    if (greenSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "green" && count == 1) {
+    if (greenSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "green" && count == 1 && playerRoll != null) {
         endingPoint = arr[arr.indexOf(endingPoint) + 4]
         count += 1
     }
-    if (yellowSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "yellow" && count == 1) {
+    if (yellowSquares.includes(endingPoint) && selectedPiece.children().attr("class").split(' ')[0] == "yellow" && count == 1 && playerRoll != null) {
         endingPoint = arr[arr.indexOf(endingPoint) + 4]
         count += 1
+    }
+    if (selectedPiece.children().attr("class").split(' ')[0] == "blue" && startingPoint + playerRoll >= 49) {
+        endingPoint = blueInnerPath[0 + (startingPoint + playerRoll - 49)]
+    } // blue will work since it will definitely follow outerpath method
+    let piecesPath = arr.slice(startingPoint, arr.indexOf(endingPoint))
+    if (selectedPiece.children().attr("class").split(' ')[0] == "red" && piecesPath.includes("B7")) {
+        endingPoint = redInnerPath[0 + (startingPoint + playerRoll - 10)]
+    }
+    if (selectedPiece.children().attr("class").split(' ')[0] == "green" && piecesPath.includes("H14")) {
+        endingPoint = greenInnerPath[0 + (startingPoint + playerRoll - 23)]
+    }
+    if (selectedPiece.children().attr("class").split(' ')[0] == "yellow" && piecesPath.includes("N7")) {
+        endingPoint = yellowInnerPath[0 + (startingPoint + playerRoll - 36)]
     }
     $(`#${endingPoint}`).append(selectedPiece.children())
+    piecesPath = []
     playerRoll = null
     count = 1
+    // console.log(endingPoint) // why will this be undefined?
 }
 
+
+// need to check if the grid has another colour, then can it kick everyone back? 
+// Also, how should i enable such that upon button click then it will work? - because right now, what is enabled is the grid
 
 $(() => {
     // build landing page and only start game upon pressing button and entering number of players

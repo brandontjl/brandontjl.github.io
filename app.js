@@ -168,11 +168,10 @@ const move = (arr, selectedPiece) => {
     let startingPoint = arr.indexOf(selectedPiece.attr("id"))
     let endingPoint = arr[startingPoint + playerRoll]
     // const $endPosition = $(`#${endingPoint}`)
-    console.log(selectedPiece.attr("id"))
-    // piece of code not working yet
-    if (blueInnerPath.includes(selectedPiece.attr("id"))) {
+    if (blueInnerPath.includes(selectedPiece.attr("id")) && selectedPiece.children().attr("class").split(" ")[0] == "blue") {
         startingPoint = blueInnerPath.indexOf(selectedPiece.attr("id"))
         endingPoint = blueInnerPath[startingPoint + playerRoll]
+        console.log(endingPoint)
         if (startingPoint + playerRoll > 6) {
             if (startingPoint + playerRoll == 7) {
                 endingPoint = blueInnerPath[5]
@@ -186,10 +185,57 @@ const move = (arr, selectedPiece) => {
                 endingPoint = blueInnerPath[1]
             }
         }
-        if (startingPoint + playerRoll == 6) {
-            // return piece to home to cover win
+    }
+    if (redInnerPath.includes(selectedPiece.attr("id")) && selectedPiece.children().attr("class").split(" ")[0] == "red") {
+        startingPoint = redInnerPath.indexOf(selectedPiece.attr("id"))
+        endingPoint = redInnerPath[startingPoint + playerRoll]
+        if (startingPoint + playerRoll > 6) {
+            if (startingPoint + playerRoll == 7) {
+                endingPoint = redInnerPath[5]
+            } else if (startingPoint + playerRoll == 8) {
+                endingPoint = redInnerPath[4]
+            } else if (startingPoint + playerRoll == 9) {
+                endingPoint = redInnerPath[3]
+            } else if (startingPoint + playerRoll == 10) {
+                endingPoint = redInnerPath[2]
+            } else if (startingPoint + playerRoll == 11) {
+                endingPoint = redInnerPath[1]
+            }
         }
-        return
+    }
+    if (greenInnerPath.includes(selectedPiece.attr("id")) && selectedPiece.children().attr("class").split(" ")[0] == "green") {
+        startingPoint = greenInnerPath.indexOf(selectedPiece.attr("id"))
+        endingPoint = greenInnerPath[startingPoint + playerRoll]
+        if (startingPoint + playerRoll > 6) {
+            if (startingPoint + playerRoll == 7) {
+                endingPoint = greenInnerPath[5]
+            } else if (startingPoint + playerRoll == 8) {
+                endingPoint = greenInnerPath[4]
+            } else if (startingPoint + playerRoll == 9) {
+                endingPoint = greenInnerPath[3]
+            } else if (startingPoint + playerRoll == 10) {
+                endingPoint = greenInnerPath[2]
+            } else if (startingPoint + playerRoll == 11) {
+                endingPoint = greenInnerPath[1]
+            }
+        }
+    }
+    if (yellowInnerPath.includes(selectedPiece.attr("id")) && selectedPiece.children().attr("class").split(" ")[0] == "yellow") {
+        startingPoint = yellowInnerPath.indexOf(selectedPiece.attr("id"))
+        endingPoint = yellowInnerPath[startingPoint + playerRoll]
+        if (startingPoint + playerRoll > 6) {
+            if (startingPoint + playerRoll == 7) {
+                endingPoint = yellowInnerPath[5]
+            } else if (startingPoint + playerRoll == 8) {
+                endingPoint = yellowInnerPath[4]
+            } else if (startingPoint + playerRoll == 9) {
+                endingPoint = yellowInnerPath[3]
+            } else if (startingPoint + playerRoll == 10) {
+                endingPoint = yellowInnerPath[2]
+            } else if (startingPoint + playerRoll == 11) {
+                endingPoint = yellowInnerPath[1]
+            }
+        }
     }
     count = 1
     if (startingPoint + playerRoll > 51) {
@@ -293,17 +339,31 @@ $(() => {
             move(outerPath, $(event.currentTarget))
         })
 
-    })
+        for (let i = 0; i < outerPath.length; i++) {
+            const $path = $(`#${outerPath[0]}`)
+            if ($path.children().length >= 2) {
+                let childrenElements = []
+                for (const child of $path.children()) {
+                    childrenElements.push(child)
+                }
+                console.log(childrenElements)
+                if (childrenElements.every((element) => {
+                    element == childrenElements[0]
+                })) {
+                    return
+                } else {
+                    const kickedElements = childrenElements.filter((element) => (element) != childrenElements[childrenElements.length - 1])
+                    for (const x of kickedElements) {
+                    }
+                }
+            }
+        }
 
 
 
-
-
-})
-
-// Appendix (unused code)
-// Creating pieces
-// const pieceColours = ["blue", "red", "green", "yellow"]
+        // Appendix (unused code)
+        // Creating pieces
+        // const pieceColours = ["blue", "red", "green", "yellow"]
         // const gamePieces = []
         // for (let i = 0; i < pieceColours.length; i++) {
         //     for (let j = 0; j < 4; j ++){}
@@ -330,21 +390,23 @@ $(() => {
 
         // build the 4 pieces for each colour (total 16 pieces) using Class?
 
-// class GamePiece {
-//     constructor(color) {
-//         this.color = color
-//     }
+        // class GamePiece {
+        //     constructor(color) {
+        //         this.color = color
+        //     }
 
-//     move() {
+        //     move() {
 
-//     }
-// }
+        //     }
+        // }
 
-    // const $row = $(".row")
-    // const $box = $(".box")
-    // let turn = 1
-    // const registeredPlays = []
-    // $box.on("click", (event) => {
-    //     console.log($(event.currentTarget))
-    //     const $selectedBox = $(event.currentTarget)
-    // })
+        // const $row = $(".row")
+        // const $box = $(".box")
+        // let turn = 1
+        // const registeredPlays = []
+        // $box.on("click", (event) => {
+        //     console.log($(event.currentTarget))
+        //     const $selectedBox = $(event.currentTarget)
+        // })
+    })
+})

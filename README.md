@@ -24,11 +24,11 @@ Arrays created:
 - houses = This array was used to validate if the selected starting grid still has a child (game piece) and can push the child into the starting point (SP).
 
 Functions called:
-createBlue() / createRed() / createGreen() / createYellow() = These functions will create the corresponding pieces for each colour and append them to their coloured starting zones.
-makeBoard() = This function will be called upon clicking "Start" button. It calls a nested loop to build a 15x15 board with each grid having a corresponding class of "box" and an ID (i.e., A0, A1, A2, ..., O12, O13, O14).
-startingPoint() = This function was used to validate if the selected starting grid still has a child (game piece) and can push the child into the starting point (SP) by checking against the houses array.
-moveOut() = This function will be called upon clicking each corresponding home grid. It pushes the pieces at the starting point into the main path (outerPath)
-move() = This function holds the bullk of the movement of each piece and was used to fulfil rules 2 and 3.
+1. createBlue() / createRed() / createGreen() / createYellow() = These functions will create the corresponding pieces for each colour and append them to their coloured starting zones.
+2. makeBoard() = This function will be called upon clicking "Start" button. It calls a nested loop to build a 15x15 board with each grid having a corresponding class of "box" and an ID (i.e., A0, A1, A2, ..., O12, O13, O14).
+3. startingPoint() = This function was used to validate if the selected starting grid still has a child (game piece) and can push the child into the -starting point (SP) by checking against the houses array.
+4. moveOut() = This function will be called upon clicking each corresponding home grid. It pushes the pieces at the starting point into the main path (outerPath)
+5. move() = This function holds the bullk of the movement of each piece and was used to fulfil rules 2 and 3.
 
 Rules of the game:
 1. Only when the dice rolls 6, can a piece exit their starting zone and into the starting point (SP).
@@ -55,10 +55,10 @@ CSS File:
 - outerPath grids were coloured at 4 space intervals
 - Other technologies included using display, background-color, font, font-size, height, width, padding, etc.
 
-Challenges Faced:
-1) When I use .children(), it returns an object with the children elements. However, how do I access each child? They are supposedly object data types and I am unable to call the class of each child element.
-2) I faced challenges when trying to move each piece based on 
-3) I believe the game can be a lot more efficient if I were to use Class to build each game piece since the functions to be called are the same. However, at the present moment, still not confident in applying Class concepts to programming.
-4) Weak in CSS - especially with regards to how to manipulate elements to be beside, centred, in front of, behind different elements.
+C) Challenges Faced:
+1. When I use .children(), it returns an object with the children elements. However, how do I access each child? They are supposedly object data types and I am unable to call the class of each child element.
+2. I faced challenges when trying to move each piece based on 
+3. I believe the game can be a lot more efficient if I were to use Class to build each game piece since the functions to be called are the same. However, at the present moment, still not confident in applying Class concepts to programming.
+4. Weak in CSS - especially with regards to how to manipulate elements to be beside, centred, in front of, behind different elements.
 
 

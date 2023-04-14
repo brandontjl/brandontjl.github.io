@@ -3,6 +3,7 @@
 
 let playerRoll = 0 // globally defined playerRoll
 let allChildren = []
+// const childrenElements = []
 const makeBoard = () => {
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"]
     for (let i = 0; i < 15; i++) {
@@ -133,33 +134,39 @@ const moveOut = (arr, selectedPiece) => {
         if (playerRoll == 2 || playerRoll == 6) {
             arrayEndpt = arr[playerRoll - 1 + 4]
         }
-        // console.log(arrayEndpt)
-        const $endPoint = $(`#${arrayEndpt}`)
-        $endPoint.append(selectedPiece.children())
+        $endPoint = $(`#${arrayEndpt}`)
     } else if (selectedPiece.attr("id") == "L14") {
         let arrayEndpt = arr[25 + playerRoll]
         if (playerRoll == 2 || playerRoll == 6) {
             arrayEndpt = arr[25 + playerRoll + 4]
         }
-        const $endPoint = $(`#${arrayEndpt}`)
-        $endPoint.append(selectedPiece.children())
+        $endPoint = $(`#${arrayEndpt}`)
     } else if (selectedPiece.attr("id") == "B11") {
         let arrayEndpt = arr[12 + playerRoll]
         if (playerRoll == 2 || playerRoll == 6) {
             arrayEndpt = arr[12 + playerRoll + 4]
         }
-        const $endPoint = $(`#${arrayEndpt}`)
-        $endPoint.append(selectedPiece.children())
+        $endPoint = $(`#${arrayEndpt}`)
     } else if (selectedPiece.attr("id") == "N3") {
         let arrayEndpt = arr[38 + playerRoll]
         if (playerRoll == 2 || playerRoll == 6) {
             arrayEndpt = arr[38 + playerRoll + 4]
         }
-        const $endPoint = $(`#${arrayEndpt}`)
-        $endPoint.append(selectedPiece.children())
+        $endPoint = $(`#${arrayEndpt}`)
     }
+    $endPoint.append(selectedPiece.children())
     playerRoll = null
+
+    // I give up - this will be a stretch goal
+    // if ($endPoint.children().length >= 1) {
+    //     for (child of $endPoint.children()) {
+    //         childrenElements.push(child)
+    //         console.log(child) // object
 }
+// if (childrenElements.every((element) => {
+//     element
+// }))
+
 
 // embedded function - from outerpath into innerpath
 
@@ -167,6 +174,7 @@ const moveOut = (arr, selectedPiece) => {
 const move = (arr, selectedPiece) => {
     let startingPoint = arr.indexOf(selectedPiece.attr("id"))
     let endingPoint = arr[startingPoint + playerRoll]
+    let piecesPath = arr.slice(startingPoint, arr.indexOf(endingPoint))
     // const $endPosition = $(`#${endingPoint}`)
     if (blueInnerPath.includes(selectedPiece.attr("id")) && selectedPiece.children().attr("class").split(" ")[0] == "blue") {
         startingPoint = blueInnerPath.indexOf(selectedPiece.attr("id"))
@@ -185,6 +193,11 @@ const move = (arr, selectedPiece) => {
                 endingPoint = blueInnerPath[1]
             }
         }
+        $(`#${endingPoint}`).append(selectedPiece.children())
+        piecesPath = []
+        playerRoll = null
+        count = 1
+        return
     }
     if (redInnerPath.includes(selectedPiece.attr("id")) && selectedPiece.children().attr("class").split(" ")[0] == "red") {
         startingPoint = redInnerPath.indexOf(selectedPiece.attr("id"))
@@ -202,6 +215,11 @@ const move = (arr, selectedPiece) => {
                 endingPoint = redInnerPath[1]
             }
         }
+        $(`#${endingPoint}`).append(selectedPiece.children())
+        piecesPath = []
+        playerRoll = null
+        count = 1
+        return
     }
     if (greenInnerPath.includes(selectedPiece.attr("id")) && selectedPiece.children().attr("class").split(" ")[0] == "green") {
         startingPoint = greenInnerPath.indexOf(selectedPiece.attr("id"))
@@ -219,6 +237,11 @@ const move = (arr, selectedPiece) => {
                 endingPoint = greenInnerPath[1]
             }
         }
+        $(`#${endingPoint}`).append(selectedPiece.children())
+        piecesPath = []
+        playerRoll = null
+        count = 1
+        return
     }
     if (yellowInnerPath.includes(selectedPiece.attr("id")) && selectedPiece.children().attr("class").split(" ")[0] == "yellow") {
         startingPoint = yellowInnerPath.indexOf(selectedPiece.attr("id"))
@@ -236,6 +259,11 @@ const move = (arr, selectedPiece) => {
                 endingPoint = yellowInnerPath[1]
             }
         }
+        $(`#${endingPoint}`).append(selectedPiece.children())
+        piecesPath = []
+        playerRoll = null
+        count = 1
+        return
     }
     count = 1
     if (startingPoint + playerRoll > 51) {
@@ -261,7 +289,6 @@ const move = (arr, selectedPiece) => {
     if (selectedPiece.children().attr("class").split(' ')[0] == "blue" && startingPoint + playerRoll >= 49) {
         endingPoint = blueInnerPath[0 + (startingPoint + playerRoll - 49)]
     } // blue will work since it will definitely follow outerpath method
-    let piecesPath = arr.slice(startingPoint, arr.indexOf(endingPoint))
     if (selectedPiece.children().attr("class").split(' ')[0] == "red" && piecesPath.includes("B7")) {
         endingPoint = redInnerPath[0 + (startingPoint + playerRoll - 10)]
     }
@@ -272,10 +299,15 @@ const move = (arr, selectedPiece) => {
         endingPoint = yellowInnerPath[0 + (startingPoint + playerRoll - 36)]
     }
     $(`#${endingPoint}`).append(selectedPiece.children())
+    // console.log($(`#${endingPoint}`).children())
+    // if ($(`#${endingPoint}`).children().length >= 2) {
+    //     console.log($(`#${endingPoint}`).children())
+    // }
     piecesPath = []
     playerRoll = null
     count = 1
     // console.log(endingPoint) // why will this be undefined?
+
 }
 
 
@@ -326,6 +358,7 @@ $(() => {
             startingPoint(houses, $(event.currentTarget))
         })
         // how to just apply the function to the selected piece
+
         const $movingPiece = $(".sp")
         $movingPiece.on("click", (event) => {
             event.preventDefault()
@@ -337,27 +370,22 @@ $(() => {
         $movingOuterPiece.on("click", (event) => {
             event.preventDefault()
             move(outerPath, $(event.currentTarget))
+
         })
 
-        for (let i = 0; i < outerPath.length; i++) {
-            const $path = $(`#${outerPath[0]}`)
-            if ($path.children().length >= 2) {
-                let childrenElements = []
-                for (const child of $path.children()) {
-                    childrenElements.push(child)
-                }
-                console.log(childrenElements)
-                if (childrenElements.every((element) => {
-                    element == childrenElements[0]
-                })) {
-                    return
-                } else {
-                    const kickedElements = childrenElements.filter((element) => (element) != childrenElements[childrenElements.length - 1])
-                    for (const x of kickedElements) {
-                    }
-                }
-            }
-        }
+        // only this chunk of code not working. Else - all good already. Kicking code
+        // for (let i = 0; i < outerPath.length; i++) {
+        //     const $path = $(`#${outerPath[i]}`)
+        //     console.log($path.children().length)
+        //     if ($path.children().length >= 1) {
+        //         console.log($path.children())
+        //     }
+        //     if ($path.children().length >= 2) {
+
+        //         console.log(childrenElements)
+        //     }
+        // }
+    }
 
 
 
@@ -408,5 +436,5 @@ $(() => {
         //     console.log($(event.currentTarget))
         //     const $selectedBox = $(event.currentTarget)
         // })
-    })
+    )
 })

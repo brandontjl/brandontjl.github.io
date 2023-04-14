@@ -57,7 +57,7 @@ CSS File:
 
 C) Challenges Faced:
 1. When I use .children(), it returns an object with the children elements. However, how do I access each child? They are supposedly object data types and I am unable to call the class of each child element.
-2. I faced challenges when trying to move each piece based on 
+2. I faced challenges when trying to move each piece based on the pieces themselves as buttons. I reverted to using the static grids instead but I believe this is linked to Challenge #3 below.
 3. I believe the game can be a lot more efficient if I were to use Class to build each game piece since the functions to be called are the same. However, at the present moment, still not confident in applying Class concepts to programming.
 4. Weak in CSS - especially with regards to how to manipulate elements to be beside, centred, in front of, behind different elements.
 
